@@ -1,7 +1,7 @@
-import sys
 import pygame
 from settings import Settings
 from ship import Ship
+import game_functions as gf
 
 def run_game():
     #Initializing the game window and setting the caption
@@ -12,15 +12,7 @@ def run_game():
     ship = Ship(screen)
     #Running the game main loop
     while True:
-        #Evaluating Events by mouse and keyboard
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
-        #Redrawing the color every loop
-        screen.fill(ai_settings.bg_color)
-        #Drawing the ship
-        ship.blitme()
-        #Making the last drawn screen visible
-        pygame.display.flip()
+        gf.check_events()
+        gf.update_screen(ai_settings, screen, ship)
 
 run_game()
