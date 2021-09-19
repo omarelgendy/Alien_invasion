@@ -1,6 +1,9 @@
 import sys
 import pygame
+<<<<<<< Updated upstream
 from pygame.constants import K_DOWN, K_UP
+=======
+>>>>>>> Stashed changes
 
 def check_events(ship):
     """Respond to keypresses and mouse events"""
@@ -21,7 +24,11 @@ def check_events(ship):
             elif event.key == pygame.K_DOWN:
                 ship.moving_down = True
                 ship.rect.bottom += 1
+<<<<<<< Updated upstream
         
+=======
+                
+>>>>>>> Stashed changes
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT:
                 ship.moving_right = False
