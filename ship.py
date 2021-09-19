@@ -18,16 +18,15 @@ class Ship():
     
     def update(self):
         """Update the ship's position based on the movement flag"""
-        if self.moving_right:
-            if self.moving_right and self.rect.right < self.screen_rect.right:
+        if self.moving_right and self.rect.right < self.screen_rect.right:
                 self.center += self.ai_settings.ship_speed_factor
-        elif self.moving_left:
-            if self.moving_left and self.rect.left > self.screen_rect.left:
-                self.center -= self.ai_settings.ship_speed_factor
-        elif self.moving_up:
-                self.bottom -= self.ai_settings.ship_speed_factor
-        elif self.moving_down:
+        elif self.moving_left and self.rect.left > self.screen_rect.left:
+            self.center -= self.ai_settings.ship_speed_factor
+        elif self.moving_up and self.rect.top > self.screen_rect.top:
+            self.bottom -= self.ai_settings.ship_speed_factor
+        elif self.moving_down and self.rect.bottom < self.screen_rect.bottom:
             self.bottom += self.ai_settings.ship_speed_factor
+        
         self.rect.centerx = self.center
         self.rect.bottom = self.bottom
     def blitme(self):
