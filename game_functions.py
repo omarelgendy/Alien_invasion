@@ -90,12 +90,15 @@ def change_fleet_direction(ai_settings, aliens):
     ai_settings.fleet_direction *= -1
 
 def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
-    stats.ships_left -= 1
-    aliens.empty()
-    bullets.empty()
-    create_fleet(ai_settings, screen, ship, aliens)
-    ship.center_ship()
-    sleep(0.5)
+    if stats.ships_left > 0:
+        stats.ships_left -= 1
+        aliens.empty()
+        bullets.empty()
+        create_fleet(ai_settings, screen, ship, aliens)
+        ship.center_ship()
+        sleep(0.5)
+    else:
+        stats.game_active = False
 
 def update_bullets(ai_settings, screen, ship, aliens, bullets):
     """Update the position of the bullets and get rid of old ones"""
