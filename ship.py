@@ -29,5 +29,10 @@ class Ship():
         
         self.rect.centerx = self.center
         self.rect.bottom = self.bottom
+
+    def center_ship(self):
+        """Center the ship on screen"""
+        self.center = self.screen_rect.centerx
+        self.bottom = self.screen_rect.bottom
     def blitme(self):
         self.screen.blit(self.image, self.rect)
