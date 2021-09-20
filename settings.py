@@ -19,3 +19,19 @@ class Settings():
         self.fleet_direction = 1
 
         self.ship_limit = 3
+
+        self.speedup_scale = 1.1
+        self.dynamic_settings()
+
+    def dynamic_settings(self):
+        """Start settings that change throughout the game"""
+        self.ship_speed_factor = 1.5
+        self.bullet_speed_factor = 3
+        self.alien_speed_factor = 1
+        self.fleet_direction = 1
+
+    def increase_speed(self):
+        """Increase speed settings"""
+        self.ship_speed_factor *= self.speedup_scale
+        self.bullet_speed_factor *= self.speedup_scale
+        self.alien_speed_factor *= self.speedup_scale

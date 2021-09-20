@@ -4,7 +4,7 @@ from ship import Ship
 import game_functions as gf
 from pygame.sprite import Group
 from game_stats import Game_stats
-from button 
+from thebutton import Button
 
 def run_game():
     #Initializing the game window and setting the caption
@@ -20,7 +20,7 @@ def run_game():
     stats = Game_stats(ai_settings)
     #Running the game main loop
     while True:
-        gf.check_events(ai_settings, screen, stats, play_button, ship, bullets)
+        gf.check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets)
         if stats.game_active:
             ship.update()
             gf.update_bullets(ai_settings, screen, ship, aliens, bullets)
