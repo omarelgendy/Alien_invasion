@@ -1,5 +1,6 @@
 import sys
 import pygame
+from game_stats import Game_stats
 from bullet import Bullet
 from alien import Alien
 from time import sleep
@@ -36,7 +37,12 @@ def check_keyup_events(event, ship):
     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
         ship.moving_down = False
 
-def check_events(ai_settings, screen, ship, bullets):
+def check_play_button(stats, play_button, mouse_x, mouse_y):
+    """Start a new game if the button is clicked"""
+    if play_button.rect.collidepoint(mouse_x, mouse_y):
+        stats.game_active = True
+
+def check_events(ai_settings, screen, stats, ship, bullets, play_button):
     """Respond to keypresses and mouse events"""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -45,6 +51,9 @@ def check_events(ai_settings, screen, ship, bullets):
             check_keydown_events(event, ai_settings, screen, ship, bullets)
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, ship)
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            check_play_button(stats, play_button, mouse_x, mouse_y)
 
 def get_number_aliens_x(ai_settings, alien_width):
     """Calculate te number of aliens per row"""
@@ -125,16 +134,18 @@ def update_aliens(ai_settings, stats, screen, ship, aliens, bullets):
     if pygame.sprite.spritecollideany(ship, aliens):
         ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
 
-def update_screen(ai_settings, screen, ship, aliens, bullets):
+def update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button):
     """Update images on the screen and flip to the new screen"""
     #Redrawing the color every loop
-    screen.fill(ai_settings.bg_color)
-
     for bullet in bullets.sprites():
         bullet.draw_bullet()
     #Drawing the ship
     ship.blitme()
     #Drawing the alien
     aliens.draw(screen)
+
+    screen.fill(ai_settings.bg_color)
+    if not stats.game_active:
+        play_button.draw_button()
     #Making the last drawn screen visible
     pygame.display.flip()
