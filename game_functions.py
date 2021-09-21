@@ -41,7 +41,6 @@ def check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bul
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
     if button_clicked and not stats.game_active:
         ai_settings.dynamic_settings()
-        pygame.mouse.set_visible(False)
         stats.reset_stats()
         stats.game_active = True
         aliens.empty()
@@ -72,7 +71,7 @@ def get_number_aliens_x(ai_settings, alien_width):
 def get_number_rows(ai_settings, ship_height, alien_height):
     """Determine the number of alien rows that fits the screen"""
     available_space_y = (ai_settings.screen_height - (4 * alien_height) - ship_height)
-    number_rows = int(available_space_y / (1.5 * alien_height))
+    number_rows = int(available_space_y / (2 * alien_height))
     return number_rows
 
 def create_alien(ai_settings, screen, aliens, alien_number, row_number):
@@ -140,12 +139,14 @@ def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
 def update_aliens(ai_settings, stats, screen, ship, aliens, bullets):
     """Update the position of all aliens in a fleet"""
     check_fleet_edges(ai_settings, aliens)
-    aliens.update()
+    if stats.game_active:
+        aliens.update(ai_settings)
     if pygame.sprite.spritecollideany(ship, aliens):
         ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
 
-def update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button):
+def update_screen(ai_settings, screen, stats, play_button, ship, aliens, bullets):
     """Update images on the screen and flip to the new screen"""
+    screen.fill(ai_settings.bg_color)
     #Redrawing the color every loop
     for bullet in bullets.sprites():
         bullet.draw_bullet()
@@ -154,7 +155,6 @@ def update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button
     #Drawing the alien
     aliens.draw(screen)
 
-    screen.fill(ai_settings.bg_color)
     if not stats.game_active:
         play_button.draw_button()
     #Making the last drawn screen visible

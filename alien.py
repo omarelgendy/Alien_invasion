@@ -22,9 +22,9 @@ class Alien(Sprite):
         elif self.rect.left <= 0:
             return True
 
-    def update(self):
+    def update(self, ai_settings):
         """Move aliens to the right or left"""
-        self.x += (self.ai_settings.alien_speed_factor * self.ai_settings.fleet_direction)
+        self.x += (ai_settings.alien_speed_factor * ai_settings.fleet_speed * self.ai_settings.fleet_direction)
         self.rect.x = self.x
 
 

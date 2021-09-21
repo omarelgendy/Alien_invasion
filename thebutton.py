@@ -5,10 +5,12 @@ class Button():
         """Initialize button class"""
         self.screen = screen
         self.screen_rect = screen.get_rect()
+
         self.width, self.height = 200, 50
         self.button_color = (230, 230, 230)
         self.text_color = (0, 1, 23)
         self.font = pygame.font.SysFont(None, 48)
+        
         self.rect = pygame.Rect(0, 0, self.width, self.height)
         self.rect.center = self.screen_rect.center
         self.prep_message(msg)
