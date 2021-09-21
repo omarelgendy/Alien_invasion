@@ -5,7 +5,11 @@ class Game_stats():
         self.ai_settings = ai_settings
         self.reset_stats()
         self.game_active = False
+        self.score = 0
+        self.highscore = 0
     
     def reset_stats(self):
         """Start changing statistics"""
         self.ships_left = self.ai_settings.ship_limit
+        self.score = 0
+        #sb.show_score()
