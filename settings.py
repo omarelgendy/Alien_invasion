@@ -20,12 +20,12 @@ class Settings():
         self.fleet_direction = 1
 
         self.ship_limit = 3
+        self.number_increase_factor = 2
 
         self.alien_points = 50
         self.scoreup_factor = 1.5
 
         self.speedup_scale = 1.1
-        self.dropup_scale = 1.1
         self.dynamic_settings()
 
     def dynamic_settings(self):
@@ -37,6 +37,7 @@ class Settings():
         self.fleet_drop_speed = 5
         self.bullets_allowed = 3
         self.alien_points = 50
+        self.number_increase_factor = 2
 
 
     def increase_speed(self):
@@ -45,8 +46,9 @@ class Settings():
             self.ship_speed_factor *= self.speedup_scale
             self.bullet_speed_factor *= self.speedup_scale
             self.alien_speed_factor *= self.speedup_scale
-            self.fleet_drop_speed *= self.dropup_scale
             self.bullets_allowed += 0.34
             self.alien_points *= self.scoreup_factor
+            if self.number_increase_factor > 1.5:
+                self.number_increase_factor -= 0.1
         else:
             pass

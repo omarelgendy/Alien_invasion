@@ -43,6 +43,8 @@ def check_play_button(ai_settings, screen, stats, sb, play_button, ship, aliens,
         ai_settings.dynamic_settings()
         stats.reset_stats()
         sb.prep_score()
+        sb.prep_level()
+        sb.prep_ships()
         sb.show_score()
         stats.game_active = True
         aliens.empty()
@@ -67,8 +69,8 @@ def check_events(ai_settings, screen, stats, sb, play_button, ship, aliens, bull
 
 def get_number_aliens_x(ai_settings, alien_width):
     """Calculate te number of aliens per row"""
-    available_space_x = ai_settings.screen_width - 1.5 * alien_width
-    number_aliens_x = int(available_space_x / (1.5 * alien_width))
+    available_space_x = ai_settings.screen_width - ai_settings.number_increase_factor * alien_width
+    number_aliens_x = int(available_space_x / (ai_settings.number_increase_factor * alien_width))
     return number_aliens_x
 
 def get_number_rows(ai_settings, ship_height, alien_height):
@@ -111,6 +113,7 @@ def change_fleet_direction(ai_settings, aliens):
 def ship_hit(ai_settings, stats, screen, sb, ship, aliens, bullets):
     if stats.ships_left > 1:
         stats.ships_left -= 1
+        sb.prep_ships()
         aliens.empty()
         bullets.empty()
         create_fleet(ai_settings, screen, ship, aliens)
@@ -132,6 +135,8 @@ def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets):
     if len(aliens) == 0:
         bullets.empty()
         ai_settings.increase_speed()
+        stats.level += 1
+        sb.prep_level()
         create_fleet(ai_settings, screen, ship, aliens)
 
 def check_aliens_bottom(ai_settings, stats, screen, sb, ship, aliens, bullets):
